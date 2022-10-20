@@ -51,8 +51,6 @@ const cancel = () => {
     component="form"
     sx={{
       '& > :not(style)': { m: 1, width: '25ch' },
-      display: 'flex',
-      minWidth: '30%'
     }}
     noValidate
     autoComplete="off"
