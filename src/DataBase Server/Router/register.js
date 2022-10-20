@@ -13,7 +13,7 @@ register.post('/register', (req, res) => {
       })
     } else {
       res.send({
-        status: 20
+        status: 200
       })
     }
   })

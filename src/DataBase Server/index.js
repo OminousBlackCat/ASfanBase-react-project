@@ -10,6 +10,6 @@ app.use(express.json())
 // 全部路由模块化封装
 app.use('/', router)
 
-app.listen(10006, () => {
+app.listen(8000, () => {
   console.log('ok')
 })
