@@ -3,9 +3,8 @@ import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
+import { useNavigate } from "react-router-dom";
 
-import register from '../axios api/index'
-import axios from "axios";
 
 function Login () {
   const form = {
@@ -20,19 +19,12 @@ function Login () {
   const hancleChange_pass = (event) => {
     setUserInfo_pass(event.target.value)
   }
-
+  const navigate = useNavigate()
   function submit () {
     form.name = userInfo_name
     form.password = userInfo_pass
-    axios.post('/register/register', {
-      form
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
+    
+    navigate("/Home")
   }
   function cancel () {
   }
