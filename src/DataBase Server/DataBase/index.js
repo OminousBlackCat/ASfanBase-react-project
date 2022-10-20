@@ -6,7 +6,8 @@ const connection = mysql.createConnection({
   password: '123698745',
   database: 'react-mysql',
   port: 10006, // 端口号
-  multipleStatements: true
+  multipleStatements: true,
+  useConnectionPooling: true
 })
 
 module.exports = connection
