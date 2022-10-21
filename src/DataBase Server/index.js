@@ -1,7 +1,7 @@
 const express = require('express')
 // 数据库连接模块
 // eslint-disable-next-line no-unused-vars
-const connection = require('./DataBase/index').default
+const connection = require('./DataBase/index')
 const router = require('./Router/index')
 const app = express()
 
