@@ -4,16 +4,24 @@ const login = express.Router()
 
 login.get('/login', (req, res) => {
   // eslint-disable-next-line handle-callback-err
-  connection.query('select * from user where name = "' + req.query.form.name + '"', function (err, rows, fields) {
-    console.log(rows)
-    console.log(req.query.form)
+  connection.query('select * from user where name = "'+req.query.form.name+'"', function (err, rows, fields) {
     if (err) {
       throw err
     }
-    if (!rows) {
+    if (rows.length == 0) {
       res.send({
-        status: 201
+        status: 304
       })
+    } else {
+      if (rows[0].password == req.query.form.password) {
+        res.send({
+          status: 200
+        })
+      } else {
+        res.send({
+          status: 201
+        })
+      }
     }
   })
 })

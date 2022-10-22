@@ -8,11 +8,27 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import InputAdornment from '@mui/material/InputAdornment';
 import Password from '@mui/icons-material/Password';
 import Email from '@mui/icons-material/Email';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 //===========================================
 import request from "../../../utils/request"
 //===========================================
 
-export default function LoginAndRegister () {
+export default function Register () {
+  //===========================================
+  const [open, setOpen] = useState(false)
+  const [type, setType] = useState('')
+  const [mes, setMes] = useState('')
+  const [vertical, setVertical] = useState('top')
+  const [horizontal, setHorizontal] = useState('center')
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
 //===========================================
 const form = {
   name: '',
@@ -76,7 +92,16 @@ const submit = () => {
         form
       }
     }).then(function (response) {
-      console.log(response);
+      if (response.data.status == 200) { 
+        setOpen(true)
+        setType('success')
+        setMes('Successful')
+      } else {
+        setOpen(true)
+        setType('error')
+        setMes('Error')
+      }
+      
     })
   }
 }
@@ -149,6 +174,17 @@ const cancel = () => {
           <ButtonGroup color="primary" variant="outlined" aria-label="outlined button group">
             <Button onClick={submit}>SUBMIT</Button>
             <Button onClick={cancel}>CANCEL</Button>
+            <Snackbar
+              anchorOrigin={{ vertical, horizontal }}
+              open={open}
+              onClose={handleClose}
+              key={vertical + horizontal}
+              autoHideDuration={2000}
+            >
+            <Alert severity={type} sx={{ width: '100%' }}>
+              {mes}
+            </Alert>
+            </Snackbar>
           </ButtonGroup>
         </Box>
       </div>
