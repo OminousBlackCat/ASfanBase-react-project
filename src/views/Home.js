@@ -115,7 +115,7 @@ export default function Home() {
   ]
 
   const PathOfListPublic = [
-    '/Home/PublicHome', '/Home/Blog', '/Home/Email', '/Home/StudyMaterials'
+    '/Home', '/Home/Blog', '/Home/Email', '/Home/StudyMaterials'
   ]
 
   const iconPublic = (index) => {

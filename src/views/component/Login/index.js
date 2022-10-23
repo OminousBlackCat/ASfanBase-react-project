@@ -79,7 +79,7 @@ export default function Login () {
           setOpen(true)
           setType('success')
           setMes('Successful')
-          navigate('/Home')
+          navigate('/Home/PublicHome')
         } else {
           setOpen(true)
           setType('error')

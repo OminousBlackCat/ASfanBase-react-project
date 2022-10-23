@@ -41,7 +41,7 @@ function a11yProps(index) {
 export default function Blog() {
 //===========================================
   const navigate = useNavigate()
-  const ListPath = ['/Home/Blog/ListImg','/Home/Blog/ListMes']
+  const ListPath = ['/Home/Blog','/Home/Blog/ListMes']
 //=========================================== 
   const [value, setValue] = React.useState(0);
 
