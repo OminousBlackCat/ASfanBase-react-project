@@ -14,7 +14,7 @@ import request from "../../../utils/request"
 //===========================================
 
 export default function Login () {
-  //===========================================
+//===========================================
   const [open, setOpen] = useState(false)
   const [type, setType] = useState('')
   const [mes, setMes] = useState('')
@@ -75,11 +75,11 @@ export default function Login () {
         }
       }).then(function (response) {
         console.log(response.data.status)
-        if (response.data.status == 200) { 
+        if (response.data.status === 200) { 
           setOpen(true)
           setType('success')
           setMes('Successful')
-          navigate("/Home")
+          navigate('/Home')
         } else {
           setOpen(true)
           setType('error')
