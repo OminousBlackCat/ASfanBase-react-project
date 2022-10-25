@@ -23,6 +23,8 @@ import ModeIcon from '@mui/icons-material/Mode'
 import SettingsIcon from '@mui/icons-material/Settings'
 import PersonIcon from '@mui/icons-material/Person'
 import InfoIcon from '@mui/icons-material/Info'
+import Avatar from '@mui/material/Avatar';
+
 import { Outlet, useNavigate, } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -159,8 +161,11 @@ export default function Home() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Mini variant drawer
+            App
           </Typography>
+          <Box sx={{position: 'absolute', left: '95%'}}>
+            <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg"/>
+          </Box>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -208,8 +213,6 @@ export default function Home() {
                   justifyContent: open ? 'initial' : 'center',
                   px: 2.5,
                 }}
-
-
               >
                 <ListItemIcon
                   sx={{

@@ -10,20 +10,17 @@ import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import Button from '@mui/material/Button';
+import {Button,ButtonGroup} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-import CardMedia from '@mui/material/CardMedia';
+
+import CropperPro from 'react-cropper-pro';
 //===========================================
 const actions = [
   { icon: <AddIcon />, name: 'Add' },
-  { icon: <SaveIcon />, name: 'Save' },
-  { icon: <PrintIcon />, name: 'Print' },
   { icon: <DeleteIcon />, name: 'Delete' },
 ];
 
@@ -100,7 +97,6 @@ export default function ListImg() {
 //===========================================
   const [isVisual, setIsVisual] = React.useState('none')
   const [open, setOpen] = React.useState(false);
-  const [selectedFile, setSelectedFile] = React.useState(null)
 
   const func = (e) => {
     switch(e.name){
@@ -130,19 +126,15 @@ export default function ListImg() {
     itemData.splice(e,1)
     setItemData([...list])
   }
-
-  const selecteFileHandler = (e) => {
-    console.log(e.target.value)
-  }
 //===========================================
   return (
     <Box>
-      <Grid container spacing={2} columns={32}>
+      <Grid container spacing={2} >
         <Grid xs></Grid>
-        <Grid xs={20}>
-          <ImageList sx={{ margin: 'auto', width: '60%' }}>
+        <Grid xs={4}>
+          <ImageList sx={{ margin: 'auto', width: '100%', minWidth: '400px'}}>
             <ImageListItem key="Subheader" cols={2}>
-              <ListSubheader component="div">December</ListSubheader>
+              <ListSubheader component="div"></ListSubheader>
             </ImageListItem>
             {itemData.map((item,index) => (
               <ImageListItem key={item.img}>
@@ -194,22 +186,35 @@ export default function ListImg() {
             aria-describedby="alert-dialog-description"
           >
             <DialogTitle id="alert-dialog-title">
-              {"Upload one image file!"}
+              {"Upload image files!"}
             </DialogTitle>
-            <CardMedia
-              component="img"
-              height="194"
-              image="/static/images/cards/paella.jpg"
-              alt="Paella dish"
-            />
-            <Button variant="contained" component="label" size="medium">
-              Upload
-              <input hidden accept="image/*" multiple type="file" onChange={selecteFileHandler} />
-            </Button>
+            <Box sx={{minWidth: '300px'}}>
+              <Grid container spacing={1} >
+                <Grid item xs sx={{display: 'flex'}}>
+                  <div style={{margin: 'auto'}}>
+                  <CropperPro 
+                    defaultImg="" 
+                    onChange={(file) => console.log(file)} 
+                    onDel={(image) => console.log('remove', image)} 
+                  />
+                  </div>
+                </Grid>
+                <Grid item xs sx={{display: 'flex'}}>
+                  <ButtonGroup variant="outlined" aria-label="outlined button group" orientation="vertical" sx={{alignSelf: 'center',margin: 'auto'}}>
+                    <Button component="label">
+                      Upload
+                    </Button>
+                    <Button component="label">
+                      Upload
+                    </Button>
+                  </ButtonGroup>
+                </Grid>
+              </Grid>
+            </Box>
             <DialogActions>
-              <Button onClick={handleClose}>Disagree</Button>
+              <Button onClick={handleClose}>CANCEL</Button>
               <Button onClick={handleClose} autoFocus>
-                Agree
+                SUMIT
               </Button>
             </DialogActions>
           </Dialog>
