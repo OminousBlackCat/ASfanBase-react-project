@@ -1,110 +1,72 @@
 import * as React from 'react';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import ListSubheader from '@mui/material/ListSubheader';
-import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
 import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import {Button,ButtonGroup} from '@mui/material';
+import { Button, ButtonGroup, Container, Stack} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
-
+import Typography from '@mui/material/Typography';
 import CropperPro from 'react-cropper-pro';
+import CircularProgress from '@mui/material/CircularProgress';
 //===========================================
+
+import request from "../../../../../utils/request"
+import ImgCard from './imageCard';
+import { width } from '@mui/system';
+import { TableImg } from './imageDataList';
+
 const actions = [
   { icon: <AddIcon />, name: 'Add' },
   { icon: <DeleteIcon />, name: 'Delete' },
 ];
 
 export default function ListImg() {
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [progress, setProgress] = React.useState(0);
+  const timer = React.useRef();
+  React.useEffect(() => {
+    if (!loading) {
+      setSuccess(false);
+      setLoading(true);
+      timer.current = window.setTimeout(() => {
+        setSuccess(true);
+        setLoading(false);
+      }, 4000);
+    }
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress >= 100 ? 0 : prevProgress + 25));
+    }, 800);
+
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
 //===========================================
-  const [itemData, setItemData] = React.useState([
-    {
-      img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-      title: 'Breakfast',
-      author: '@bkristastucchio',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-      title: 'Burger',
-      author: '@rollelflex_graphy726',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-      title: 'Camera',
-      author: '@helloimnik',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-      title: 'Coffee',
-      author: '@nolanissac',
-
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-      title: 'Hats',
-      author: '@hjrc33',
-
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-      title: 'Honey',
-      author: '@arwinneil',
-
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-      title: 'Basketball',
-      author: '@tjdragotta',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-      title: 'Fern',
-      author: '@katie_wasserman',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-      title: 'Mushrooms',
-      author: '@silverdalex',
-
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-      title: 'Tomato basil',
-      author: '@shelleypauls',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-      title: 'Sea star',
-      author: '@peterlaster',
-    },
-    {
-      img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-      title: 'Bike',
-      author: '@southside_customs',
-
-    },
-  ]);
+  const [itemData, setItemData] = React.useState(TableImg);
 
 //===========================================
-  const [isVisual, setIsVisual] = React.useState('none')
+  const [isVisual, setIsVisual] = React.useState('hidden')
   const [open, setOpen] = React.useState(false);
+  const [base64, setBase64] = React.useState('');
 
   const func = (e) => {
     switch(e.name){
       case 'Delete':
-       if(isVisual === ''){
-        setIsVisual('none')
+       if(isVisual === 'visible'){
+        setIsVisual('hidden')
       } else {
-        setIsVisual('')
+        setIsVisual('visible')
       }
       break
       case 'Add':if(open === true){
@@ -116,7 +78,16 @@ export default function ListImg() {
       default :
     }
   }
-
+  const handleImg = () => {
+  }
+  const getBase64 = (file) => {
+    let reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = (e) => {
+      console.log(e.target.result)
+    }
+    console.log(reader)
+  }
   const handleClose = () => {
     setOpen(false);
   };
@@ -129,97 +100,77 @@ export default function ListImg() {
 //===========================================
   return (
     <Box>
-      <Grid container spacing={2} >
-        <Grid xs></Grid>
-        <Grid xs={4}>
-          <ImageList sx={{ margin: 'auto', width: '100%', minWidth: '400px'}}>
-            <ImageListItem key="Subheader" cols={2}>
-              <ListSubheader component="div"></ListSubheader>
-            </ImageListItem>
-            {itemData.map((item,index) => (
-              <ImageListItem key={item.img}>
-                <Button onClick={(e) => Del(index)} sx={{display: isVisual}} variant="outlined" startIcon={<DeleteIcon />}>
-                  Delete
-                </Button>
-                <img
-                  src={`${item.img}?w=248&fit=crop&auto=format`}
-                  srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                  alt={item.title}
-                  loading="lazy"
+      <Container>
+        <br />
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+          <Typography variant="h4" gutterBottom>
+            Blog
+          </Typography>
+        </Stack>
+          { success ?
+          <Grid container spacing={3}>
+              {itemData.map((item,index) => (
+                <ImgCard key={item.title} item={item} index={index}/>
+              ))}
+          </Grid>
+          :
+          <CircularProgress variant="determinate" value={progress}/> 
+          }
+      </Container>
+      <Grid xs>
+      <Box sx={{flexGrow: 1}}>
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          sx={{ bottom: '8%', right: '5%', position: 'fixed' }}
+          icon={<SpeedDialIcon />}
+        >
+          {actions.map((action) => (
+            <SpeedDialAction
+              key={action.name}
+              icon={action.icon}
+              tooltipTitle={action.name}
+              onClick={(e) => func(action)}
+            />
+          ))}
+        </SpeedDial>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {"Upload image files!"}
+          </DialogTitle>
+          <Box sx={{minWidth: '300px'}}>
+            <Grid container spacing={1} >
+              <Grid item xs sx={{display: 'flex'}}>
+                <div style={{margin: 'auto'}}>
+                <CropperPro  
+                  onChange={(file) => getBase64(file)} 
                 />
-                <ImageListItemBar
-                  title={item.title}
-                  subtitle={item.author}
-                  actionIcon={
-                    <IconButton
-                      sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                      aria-label={`info about ${item.title}`}
-                    >
-                      <InfoIcon />
-                    </IconButton>
-                  }
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
-        </Grid>
-        <Grid xs>
-        <Box sx={{flexGrow: 1}}>
-          <SpeedDial
-            ariaLabel="SpeedDial basic example"
-            sx={{ bottom: '8%', right: '5%', position: 'fixed' }}
-            icon={<SpeedDialIcon />}
-          >
-            {actions.map((action) => (
-              <SpeedDialAction
-                key={action.name}
-                icon={action.icon}
-                tooltipTitle={action.name}
-                onClick={(e) => func(action)}
-              />
-            ))}
-          </SpeedDial>
-          <Dialog
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Upload image files!"}
-            </DialogTitle>
-            <Box sx={{minWidth: '300px'}}>
-              <Grid container spacing={1} >
-                <Grid item xs sx={{display: 'flex'}}>
-                  <div style={{margin: 'auto'}}>
-                  <CropperPro 
-                    defaultImg="" 
-                    onChange={(file) => console.log(file)} 
-                    onDel={(image) => console.log('remove', image)} 
-                  />
-                  </div>
-                </Grid>
-                <Grid item xs sx={{display: 'flex'}}>
-                  <ButtonGroup variant="outlined" aria-label="outlined button group" orientation="vertical" sx={{alignSelf: 'center',margin: 'auto'}}>
-                    <Button component="label">
-                      Upload
-                    </Button>
-                    <Button component="label">
-                      Upload
-                    </Button>
-                  </ButtonGroup>
-                </Grid>
+                </div>
               </Grid>
-            </Box>
-            <DialogActions>
-              <Button onClick={handleClose}>CANCEL</Button>
-              <Button onClick={handleClose} autoFocus>
-                SUMIT
-              </Button>
-            </DialogActions>
-          </Dialog>
-        </Box>
-        </Grid>
+              <Grid item xs sx={{display: 'flex'}}>
+                <ButtonGroup variant="outlined" aria-label="outlined button group" orientation="vertical" sx={{alignSelf: 'center',margin: 'auto'}}>
+                  <Button component="label" onClick={handleImg}>
+                    Upload
+                  </Button>
+                  <Button component="label">
+                    Upload
+                  </Button>
+                </ButtonGroup>
+              </Grid>
+            </Grid>
+          </Box>
+          <DialogActions>
+            <Button onClick={handleClose}>CANCEL</Button>
+            <Button onClick={handleClose} autoFocus>
+              SUMIT
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </Box>
       </Grid>
     </Box>
   );
