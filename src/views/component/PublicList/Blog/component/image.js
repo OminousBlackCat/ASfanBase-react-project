@@ -1,9 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
-import SpeedDial from '@mui/material/SpeedDial';
-import SpeedDialIcon from '@mui/material/SpeedDialIcon';
-import SpeedDialAction from '@mui/material/SpeedDialAction';
 import { Button, ButtonGroup, Container, Stack} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AddIcon from '@mui/icons-material/Add'
@@ -20,10 +17,7 @@ import ImgCard from './imageCard';
 import { width } from '@mui/system';
 import { TableImg } from './imageDataList';
 
-const actions = [
-  { icon: <AddIcon />, name: 'Add' },
-  { icon: <DeleteIcon />, name: 'Delete' },
-];
+
 
 export default function ListImg() {
   const [loading, setLoading] = React.useState(false);
@@ -60,33 +54,30 @@ export default function ListImg() {
   const [open, setOpen] = React.useState(false);
   const [base64, setBase64] = React.useState('');
 
-  const func = (e) => {
-    switch(e.name){
-      case 'Delete':
-       if(isVisual === 'visible'){
-        setIsVisual('hidden')
-      } else {
-        setIsVisual('visible')
-      }
-      break
-      case 'Add':if(open === true){
-        setOpen(false)
-      } else {
-        setOpen(true)
-      }      
-      break
-      default :
-    }
+  const form = {
+    img: ''
   }
+
   const handleImg = () => {
+    console.log(form.img)
+    request({
+      url: '/img/add',
+      method: 'post',
+      data: {
+        form
+      }
+    }
+    ).then(function (response) {
+      console.log(response)
+    })
   }
   const getBase64 = (file) => {
     let reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onloadend = (e) => {
-      console.log(e.target.result)
+      setBase64(e.target.result)
+      form.img = base64
     }
-    console.log(reader)
   }
   const handleClose = () => {
     setOpen(false);
@@ -106,6 +97,19 @@ export default function ListImg() {
           <Typography variant="h4" gutterBottom>
             Blog
           </Typography>
+          <Button 
+            variant="outlined" 
+            startIcon={<AddIcon />}
+            onClick={() => {
+              if(open === true){
+                setOpen(false)
+              } else {
+                setOpen(true)
+              }
+            }}
+          >
+            New Blog
+          </Button>
         </Stack>
           { success ?
           <Grid container spacing={3}>
@@ -119,20 +123,6 @@ export default function ListImg() {
       </Container>
       <Grid xs>
       <Box sx={{flexGrow: 1}}>
-        <SpeedDial
-          ariaLabel="SpeedDial basic example"
-          sx={{ bottom: '8%', right: '5%', position: 'fixed' }}
-          icon={<SpeedDialIcon />}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={(e) => func(action)}
-            />
-          ))}
-        </SpeedDial>
         <Dialog
           open={open}
           onClose={handleClose}

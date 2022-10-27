@@ -36,9 +36,7 @@ export default function ImgCard({item, index}) {
         </CardContent>
         <CardActions>
         <Button 
-          size="small"
           onClick={(e) => Del(index)} 
-          sx={{}} 
           variant="outlined" 
           startIcon={<DeleteIcon />}
         >
