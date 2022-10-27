@@ -10,7 +10,7 @@ import Password from '@mui/icons-material/Password';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 //===========================================
-import request from "../../../utils/request"
+import request from "../../utils/request"
 //===========================================
 
 export default function Login () {

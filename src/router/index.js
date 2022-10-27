@@ -2,14 +2,14 @@ import {
   createBrowserRouter,
 } from "react-router-dom";
 
-import Home from "../views/Home"
+import Home from "../viewsPage/Home"
 import App from "../App"
-import PublicHome from "../views/component/PublicList/Home/index"
-import Blog from "../views/component/PublicList/Blog/index"
-import Email from "../views/component/PublicList/Email/index"
-import StudyMaterials from "../views/component/PublicList/StudyMaterials"
-import ListImg from "../views/component/PublicList/Blog/component/image"
-import ListMes from "../views/component/PublicList/Blog/component/message";
+import PublicHome from "../viewsPage/PublicList/PublicHome/index"
+import Blog from "../viewsPage/PublicList/Blog/index"
+import Email from "../viewsPage/PublicList/Email/index"
+import StudyMaterials from "../viewsPage/PublicList/StudyMaterials"
+import ListImg from "../viewComponent/blog/image/image"
+import ListMes from "../viewComponent/blog/message/message";
 
 const router = createBrowserRouter([
   {

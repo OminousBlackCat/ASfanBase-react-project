@@ -12,7 +12,7 @@ import CropperPro from 'react-cropper-pro';
 import CircularProgress from '@mui/material/CircularProgress';
 //===========================================
 
-import request from "../../../../../utils/request"
+import request from "../../../utils/request"
 import ImgCard from './imageCard';
 import { width } from '@mui/system';
 import { TableImg } from './imageDataList';

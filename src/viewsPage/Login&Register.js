@@ -6,8 +6,8 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 //===========================================
-import Login from "./component/Login/index"
-import Register from "./component/Register/index"
+import Login from "../viewComponent/login/index"
+import Register from "./Register/index"
 //===========================================
 const Accordion = styled((props) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />

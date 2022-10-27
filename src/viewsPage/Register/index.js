@@ -11,7 +11,7 @@ import Email from '@mui/icons-material/Email';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
 //===========================================
-import request from "../../../utils/request"
+import request from "../../utils/request"
 //===========================================
 
 export default function Register () {

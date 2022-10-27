@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import LoginAndRegister from "./views/Login&Register"
+import LoginAndRegister from "./viewsPage/Login&Register"
 
 function App() {
   return (
