@@ -2,9 +2,15 @@ import * as React from 'react';
 import Grid from '@mui/material/Unstable_Grid2';
 import Box from '@mui/material/Box';
 import { Button, ButtonGroup, Container, Stack} from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
-import AddIcon from '@mui/icons-material/Add'
+import TextField from '@mui/material/TextField'
+import { AccountCircle } from '@mui/icons-material';
+import AddIcon from '@mui/icons-material/Add';
+import InfoIcon from '@mui/icons-material/Info'
 import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import Typography from '@mui/material/Typography';
@@ -47,9 +53,8 @@ export default function ListImg() {
     };
   }, []);
 //===========================================
-  const [itemData, setItemData] = React.useState(TableImg);
-
 //===========================================
+  const [itemData, setItemData] = React.useState(TableImg);
   const [isVisual, setIsVisual] = React.useState('hidden')
   const [open, setOpen] = React.useState(false);
   const [base64, setBase64] = React.useState('');
@@ -57,7 +62,7 @@ export default function ListImg() {
   const form = {
     img: ''
   }
-
+//===========================================
   const handleImg = () => {
     console.log(form.img)
     request({
@@ -121,8 +126,7 @@ export default function ListImg() {
           <CircularProgress variant="determinate" value={progress}/> 
           }
       </Container>
-      <Grid xs>
-      <Box sx={{flexGrow: 1}}>
+      {/* <Box sx={{flexGrow: 1}}>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -160,8 +164,52 @@ export default function ListImg() {
             </Button>
           </DialogActions>
         </Dialog>
-      </Box>
-      </Grid>
+      </Box> */}
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {"Upload image files!"}
+        <IconButton
+          aria-label="close"
+          onClick={handleClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+           }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
+      <Stack spacing={2}>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <TextField id="input-Img-Author" label="Img Author" variant="standard" />
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+          <InfoIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
+          <TextField id="input-Img-Content" label="Img Content" variant="standard" />
+        </Box>
+        <Box sx={{alignSelf: 'center'}}>
+          <CropperPro
+            label="Img"
+            onChange={(file) => getBase64(file)} 
+          />
+        </Box>
+      </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>CANCEL</Button>
+        <Button onClick={handleClose} autoFocus>
+          SUMIT
+        </Button>
+      </DialogActions>
+    </Dialog>
     </Box>
   );
 }
