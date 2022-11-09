@@ -116,15 +116,15 @@ export default function ListImg() {
             New Blog
           </Button>
         </Stack>
-          { success ?
-          <Grid container spacing={3}>
-              {itemData.map((item,index) => (
-                <ImgCard key={item.title} item={item} index={index}/>
-              ))}
-          </Grid>
-          :
-          <CircularProgress variant="determinate" value={progress}/> 
-          }
+        { success ?
+        <Grid container spacing={3}>
+            {itemData.map((item,index) => (
+              <ImgCard key={item.title} item={item} index={index}/>
+            ))}
+        </Grid>
+        :
+        <CircularProgress variant="determinate" value={progress}/> 
+        }
       </Container>
       {/* <Box sx={{flexGrow: 1}}>
         <Dialog

@@ -12,7 +12,7 @@ const options = [
 
 const ITEM_HEIGHT = 48;
 
-export default function MessageTableFunc ({row}) {
+export default function MessageTableMore ({row}) {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);

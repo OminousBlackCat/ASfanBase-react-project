@@ -8,5 +8,7 @@ const login = require('./user/login')
 router.use('/login', login)
 const img = require('./img/img')
 router.use('/img', img)
+const msg = require('./msg/msg')
+router.use('/msg', msg)
 
 module.exports = router

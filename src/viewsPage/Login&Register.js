@@ -6,7 +6,7 @@ import MuiAccordionSummary from '@mui/material/AccordionSummary';
 import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 //===========================================
-import Login from "../viewComponent/login/index"
+import Login from "./Login/index"
 import Register from "./Register/index"
 //===========================================
 const Accordion = styled((props) => (

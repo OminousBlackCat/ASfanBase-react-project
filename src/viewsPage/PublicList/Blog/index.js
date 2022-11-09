@@ -43,7 +43,7 @@ export default function Blog() {
   const navigate = useNavigate()
   const ListPath = ['/Home/Blog','/Home/Blog/ListMes']
 //=========================================== 
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = React.useState(null);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
